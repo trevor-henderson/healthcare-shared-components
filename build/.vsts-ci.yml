@@ -11,7 +11,7 @@ variables:
 jobs:
 - job: Semver
   pool:
-    vmImage: 'ubuntu-latest'
+    vmImage: 'windows-latest'
   steps:
   - template: ./update-semver.yml
   - script: echo %Action%%BuildVersion%
@@ -25,6 +25,12 @@ jobs:
     vmImage: 'windows-latest'
   dependsOn:
   - Semver
+  variables:
+    assemblySemVer: $[dependencies.Semver.outputs['SetVariablesFromGitVersion.assemblySemVer']]
+    assemblySemFileVer: $[dependencies.Semver.outputs['SetVariablesFromGitVersion.assemblySemFileVer']]
+    informationalVersion: $[dependencies.Semver.outputs['SetVariablesFromGitVersion.informationalVersion']]
+    majorMinorPatch: $[dependencies.Semver.outputs['SetVariablesFromGitVersion.majorMinorPatch']]
+    nuGetVersion: $[dependencies.Semver.outputs['SetVariablesFromGitVersion.nuGetVersion']]
   steps:
   - template: build.yml
 
@@ -33,6 +39,12 @@ jobs:
     vmImage: 'ubuntu-latest'
   dependsOn:
   - Semver
+  variables:
+    assemblySemVer: $[dependencies.Semver.outputs['SetVariablesFromGitVersion.assemblySemVer']]
+    assemblySemFileVer: $[dependencies.Semver.outputs['SetVariablesFromGitVersion.assemblySemFileVer']]
+    informationalVersion: $[dependencies.Semver.outputs['SetVariablesFromGitVersion.informationalVersion']]
+    majorMinorPatch: $[dependencies.Semver.outputs['SetVariablesFromGitVersion.majorMinorPatch']]
+    nuGetVersion: $[dependencies.Semver.outputs['SetVariablesFromGitVersion.nuGetVersion']]
   steps:
   - template: build.yml
     parameters:

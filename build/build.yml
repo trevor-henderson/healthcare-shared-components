@@ -2,10 +2,14 @@ parameters:
   packageArtifacts: true
   
 steps:
-- template: ./update-semver.yml
+- task: UseDotNet@2
+  displayName: 'Use .NET Core 3.1.x SDK'
+  inputs:
+    packageType: sdk
+    version: 3.1.x
 
 - task: UseDotNet@2
-  displayName: 'Use .NET Core sdk'
+  displayName: 'Use .NET (global.json)'
   inputs:
     useGlobalJson: true
 
